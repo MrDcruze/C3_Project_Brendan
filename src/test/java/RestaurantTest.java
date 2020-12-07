@@ -4,6 +4,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -69,7 +71,28 @@ class RestaurantTest {
         assertThrows(itemNotFoundException.class,
                 ()->restaurant.removeFromMenu("French fries"));
     }
+
+    @Test
+    public void get_items_price_should_return_total_sum_when_items_are_selected() {
+        Restaurant restaurant = getRestaurantObject();
+
+        assertEquals(388, restaurant.getItemsPrice(restaurant.getMenu()));
+    }
+
+    @Test void get_items_price_should_return_zero_when_empty_list_of_items_is_given() {
+        Restaurant restaurant = getRestaurantObject();
+        List<Item> items = new ArrayList<Item>();
+
+        assertEquals(0, restaurant.getItemsPrice(items));
+    }
+
+    @Test void get_items_price_should_return_zero_when_list_of_items_is_null() {
+        Restaurant restaurant = getRestaurantObject();
+
+        assertEquals(0, restaurant.getItemsPrice(null));
+    }
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 
     //<<<<<<<<<<<<<<<<<<<Common Methods>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     private Restaurant getRestaurantObject() {
